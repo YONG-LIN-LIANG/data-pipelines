@@ -1,1 +1,21 @@
-print('init')
+import requests
+
+api_key = "d42dd3d3eb62be8aa5ed1b84ae6be688"
+api_url = f"https://api.weatherstack.com/current?access_key={api_key}&query=New York"
+
+def fetch_data():
+  print('Fetching data from Weatherstack API...')
+  try:
+    response = requests.get(api_url)
+    response.raise_for_status()
+    print('API response received successfully!')
+    return response.json()
+  except requests.exceptions.RequestException as e:
+    print(f"An error occured: {e}")
+    raise
+
+def mock_fetch_data():
+  return {'request': {'type': 'City', 'query': 'New York, United States of America', 'language': 'en', 'unit': 'm'}, 'location': {'name': 'New York', 'country': 'United States of America', 'region': 'New York', 'lat': '40.714', 'lon': '-74.006', 'timezone_id': 'America/New_York', 'localtime': '2026-05-12 06:26', 'localtime_epoch': 1778567160, 'utc_offset': '-4.0'}, 'current': {'observation_time': '10:26 AM', 'temperature': 8, 'weather_code': 113, 'weather_icons': ['https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png'], 'weather_descriptions': ['Sunny'], 'astro': {'sunrise': '05:42 AM', 'sunset': '08:03 PM', 'moonrise': '03:08 AM', 'moonset': '03:23 PM', 'moon_phase': 'Waning Crescent', 'moon_illumination': 29}, 'air_quality': {'co': '183.85', 'no2': '9.25', 'o3': '69', 'so2': '3.85', 'pm2_5': '5.75', 'pm10': '5.85', 'us-epa-index': '1', 'gb-defra-index': '1'}, 'wind_speed': 13, 'wind_degree': 339, 'wind_dir': 'NNW', 'pressure': 1022, 'precip': 0, 'humidity': 52, 'cloudcover': 0, 'feelslike': 6, 'uv_index': 0, 'visibility': 16, 'is_day': 'yes'}}
+
+
+print(mock_fetch_data())
