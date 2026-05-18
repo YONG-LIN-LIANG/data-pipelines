@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: pipeline-postgres-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: analytics_db
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/airflow_init.sql:/docker-entrypoint-initdb.d/airflow_init.sql
+
+    networks:
+      - my-network
+
+  airflow:
+    image: apache/airflow:2.9.3
+    container_name: airflow
+    restart: unless-stopped
+
+    depends_on:
+      - postgres
+
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow_db
+
+    ports:
+      - "8000:8080"
+
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+
+    networks:
+      - my-network
+
+    command: >
+      bash -c "airflow db migrate && airflow standalone"
+
+networks:
+  my-network:
+    driver: bridge
