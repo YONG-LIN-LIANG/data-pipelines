@@ -1,6 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS weatherstack;
 CREATE TABLE weatherstack.local_weather(
-  weather_status_id SERIAL PRIMARY KEY,
+  weather_status_id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY,
   country TEXT,
   city TEXT,
   local_time TEXT,
@@ -14,5 +14,7 @@ CREATE TABLE weatherstack.local_weather(
   latitude FLOAT,
   longitude FLOAT,
   created_ts timestamptz DEFAULT CURRENT_TIMESTAMP,
-  modified_ts timestamptz DEFAULT CURRENT_TIMESTAMP
+  modified_ts timestamptz DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT local_weather_PKEY PRIMARY KEY (weather_status_id),
+  CONSTRAINT local_weather_unique_key UNIQUE (country, city)
 );

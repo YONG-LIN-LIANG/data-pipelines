@@ -1,18 +1,30 @@
 from api_request import mock_fetch_data
 import psycopg2
+import json
 
 def connect_to_db():
   print("Connecting to the Postgres database")
 
   try:
+    # Localhost testing
+    # conn = psycopg2.connect(
+    #   host="localhost",
+    #   port=5433,
+    #   dbname="analytics_db",
+    #   user="db_user",
+    #   password="password123"
+    # )
+
+    # Environment in container
     conn = psycopg2.connect(
-      host="localhost",
-      port=5433,
+      host="postgres",
+      port=5432,
       dbname="analytics_db",
       user="db_user",
       password="password123"
     )
-    print(conn)
+    # print(conn)
+    return conn
   except psycopg2.Error as e:
     print(f"Database connection failed: {e}")
 # print(mock_fetch_data())
@@ -52,11 +64,12 @@ def insert_records(conn, in_data_json):
   
   try:
     cursor = conn.cursor()
-    cursor.execute("""
-      SELECT weatherstack.ingest_local_weather(
-        in_data_json::jsonb
-      );
-    """)
+    cursor.execute(
+        """
+        SELECT weatherstack.ingest_local_weather(%s::jsonb);
+        """,
+        (json.dumps(in_data_json),)
+    )
     conn.commit()
     print("Record was inserted.")
   except psycopg2.Error as e:
@@ -74,3 +87,6 @@ def main():
     if 'conn' in locals():
       conn.close()
       print("Database connection closed.")
+
+
+main()

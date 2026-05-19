@@ -19,3 +19,16 @@ python -m pip install requests
 <!-- Problem faced and solved -->
 *Problem* - Couldn't connect to Postgres hosted in Docker Container
 *Solution* - The port 5432 was occupied by local Postgres, so the Postgres in Docker should be ported to the port except 5432 (I set it 5433)
+
+
+<!-- Command to create customized admin user for airflow service -->
+docker exec -it airflow airflow users create \
+  --username admin \
+  --password admin \
+  --firstname Steven \
+  --lastname Liang \
+  --role Admin \
+  --email admin@example.com
+
+
+<!-- Airflow in container will communicate with Postgres in the container, so in the db connection setting it should be the db config in container -->
