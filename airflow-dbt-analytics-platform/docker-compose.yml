@@ -25,7 +25,8 @@ services:
     image: apache/airflow:2.9.3
     container_name: airflow
     restart: unless-stopped
-
+    command: >
+      bash -c "pip install dbt-postgres==1.9.0 && airflow db migrate && airflow standalone"
     depends_on:
       - postgres
 
@@ -39,29 +40,10 @@ services:
       - ./airflow/dags:/opt/airflow/dags
       # 將本地 ./api-request 映射到容器裡的 /opt/airflow/api-request 路徑
       - ./api-request:/opt/airflow/api-request
+      # 把 dbt 專案資料夾掛載進 Airflow 容器內部的 /opt/airflow/dbt
+      - ./dbt:/opt/airflow/dbt
     networks:
       - my-network
-
-    command: >
-      bash -c "airflow db migrate && airflow standalone"
-
-
-  dbt:
-    image: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
-    platform: linux/amd64
-    volumes:
-      - ./dbt/de_project:/usr/app
-      - ./dbt:/root/.dbt
-    working_dir: /usr/app
-    environment:
-      DBT_PROFILES_DIR: "/root/.dbt"
-    depends_on:
-      - postgres
-    networks:
-      - my-network
-    command: run
-    # command: debug
-    # command: init de_project
 
 networks:
   my-network:

@@ -32,8 +32,7 @@ BEGIN
       (in_data_json #>> '{location,lat}')::float,
       (in_data_json #>> '{location,lon}')::float
     )
-    ON CONFLICT (country, city) DO UPDATE SET
-      local_time = EXCLUDED.local_time,
+    ON CONFLICT (country, city, local_time) DO UPDATE SET
       temperature = EXCLUDED.temperature,
       weather_descriptions = EXCLUDED.weather_descriptions,
       wind_speed = EXCLUDED.wind_speed,
@@ -43,6 +42,6 @@ BEGIN
       visibility = EXCLUDED.visibility,
       latitude = EXCLUDED.latitude,
       longitude = EXCLUDED.longitude,
-      modified_ts = CURRENT_TIMESTAMP
+      modified_ts = CURRENT_TIMESTAMP;
 END;
 $$;

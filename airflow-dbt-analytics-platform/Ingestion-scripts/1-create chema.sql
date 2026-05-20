@@ -16,5 +16,5 @@ CREATE TABLE weatherstack.local_weather(
   created_ts timestamptz DEFAULT CURRENT_TIMESTAMP,
   modified_ts timestamptz DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT local_weather_PKEY PRIMARY KEY (weather_status_id),
-  CONSTRAINT local_weather_unique_key UNIQUE (country, city)
+  CONSTRAINT local_weather_unique_key UNIQUE (country, city, local_time)
 );
