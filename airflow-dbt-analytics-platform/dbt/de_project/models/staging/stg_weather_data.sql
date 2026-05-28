@@ -13,5 +13,5 @@ SELECT
   city,
   temperature,
   wind_speed,
-  local_time as weather_time_local
+  local_time::timestamp as weather_time_local
 FROM source

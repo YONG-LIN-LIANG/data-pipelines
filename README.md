@@ -28,7 +28,12 @@ python -m pip install requests
 
 
 <!-- Create Admin User for Airflow -->
-docker compose exec airflow airflow users create --username steven --firstname YongLin --lastname Liang --email steven841221@gmail.com --role Admin --password steven
+docker compose exec airflow airflow users create --username steven --firstname YongLin --lastname Liang --email stevenxxxxx@gmail.com --role Admin --password steven
 
 <!-- Create Admin user for Superset By defaule username: admin; password: admin -->
-docker compose exec superset superset fab create-admin --username steven --firstname YongLin --lastname Liang --email steven841221@gmail.com --password steven
+docker compose exec superset superset fab create-admin --username steven --firstname YongLin --lastname Liang --email stevenxxxxx@gmail.com --password steven
+
+
+
+<!-- To clean postgres volume data and reboot environment, Run -->
+sh ./reset_env.sh
