@@ -21,17 +21,10 @@ python -m pip install requests
 *Solution* - The port 5432 was occupied by local Postgres, so the Postgres in Docker should be ported to the port except 5432 (I set it 5433)
 
 
-<!-- Command to create customized admin user for airflow service -->
-docker exec -it airflow airflow users create \
-  --username admin \
-  --password admin \
-  --firstname Steven \
-  --lastname Liang \
-  --role Admin \
-  --email admin@example.com
-
-
 <!-- Airflow in container will communicate with Postgres in the container, so in the db connection setting it should be the db config in container -->
+
+
+<!-- To modify the duration that system log user out simply set up healthcheck interval in docker-compose.yml  -->
 
 
 <!-- Create Admin User for Airflow -->
