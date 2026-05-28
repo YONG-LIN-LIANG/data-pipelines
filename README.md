@@ -32,3 +32,10 @@ docker exec -it airflow airflow users create \
 
 
 <!-- Airflow in container will communicate with Postgres in the container, so in the db connection setting it should be the db config in container -->
+
+
+<!-- Create Admin User for Airflow -->
+docker compose exec airflow airflow users create --username steven --firstname YongLin --lastname Liang --email steven841221@gmail.com --role Admin --password steven
+
+<!-- Create Admin user for Superset By defaule username: admin; password: admin -->
+docker compose exec superset superset fab create-admin --username steven --firstname YongLin --lastname Liang --email steven841221@gmail.com --password steven
