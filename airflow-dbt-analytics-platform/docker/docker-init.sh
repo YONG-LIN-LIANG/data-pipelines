@@ -59,6 +59,13 @@ else
         --password "admin" \
         --firstname Superset \
         --lastname Admin
+    
+    superset fab create-admin \
+        --username steven \
+        --firstname YongLin \
+        --lastname Liang \
+        --email stevenxxxxx@gmail.com \
+        --password steven
 fi
 echo_step "2" "Complete" "Setting up admin user"
 # Create default roles and permissions
