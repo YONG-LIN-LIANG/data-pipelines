@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  # Schema Name
+  - name: weatherstack
+    database: analytics_db
+    tables: 
+      - name: local_weather
+        columns:
+          - name: country
+          - name: city
+          - name: local_time
+          - name: temperature
+          - name: weather_descriptions
+          - name: wind_speed
+          - name: wind_degree
+          - name: humidity
+          - name: uv_index
+          - name: visibility
+          - name: latitude
+          - name: longitude

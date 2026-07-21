@@ -1,0 +1,2 @@
+.venv
+airflow-dbt-analytics-platform/postgres/data
